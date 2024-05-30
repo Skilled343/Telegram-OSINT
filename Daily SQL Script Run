@@ -1,0 +1,15 @@
+name: Daily SQL Script Run
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Runs at 2:00 AM UTC every day
+
+jobs:
+  sql-script-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+- name: Install dependencies
+        run: |
+          sudo apt-get update
