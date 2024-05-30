@@ -18,3 +18,33 @@
     # Run the post step to save the cache even if another step before fails
     save-always: # optional, default is false
           
+- name: Cache
+  uses: actions/cache@v4.0.2
+  with:
+    path: 
+      # Specify directories or files to cache. You can use wildcards.
+      - node_modules
+- build/output
+    key: 
+      # Create a unique key to cache and restore the cache.
+      # Use a combination of the workflow's name and a hash of a file (e.g., package-lock.json) that will change when dependencies change.
+      ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+    restore-keys: 
+      # Provide fallback keys if the exact key is not found.
+      # This allows the use of the most recent cache if an exact match is not found.
+      - ${{ runner.os }}-build-
+    upload-chunk-size: 
+      # Optional. Adjust this if you need to change the upload chunk size. The default is usually sufficient.
+      5242880 # Example: 5MB in bytes
+    enableCrossOsArchive: 
+      # Optional. Set to true if you want to share caches between different OS runners.
+      false
+    fail-on-cache-miss: 
+      # Optional. If true, the workflow will fail if the cache is not found. Useful for workflows where cache is critical.
+      false
+    lookup-only: 
+      # Optional. If true, the action will only check for the existence of the cache without downloading it.
+      false
+    save-always: 
+      # Optional. If true, the cache will be saved even if previous steps in the workflow failed. Useful for caching partial progress.
+      false
